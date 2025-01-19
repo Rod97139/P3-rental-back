@@ -3,6 +3,8 @@ package com.oc.model;
 import jakarta.persistence.*;
 
 import java.time.Instant;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -26,6 +28,28 @@ public class User {
 
     @Column(name = "updated_at")
     private Instant updatedAt;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Message> messages = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "owner")
+    private Set<Rental> rentals = new LinkedHashSet<>();
+
+    public Set<Rental> getRentals() {
+        return rentals;
+    }
+
+    public void setRentals(Set<Rental> rentals) {
+        this.rentals = rentals;
+    }
+
+    public Set<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(Set<Message> messages) {
+        this.messages = messages;
+    }
 
     public Integer getId() {
         return id;
