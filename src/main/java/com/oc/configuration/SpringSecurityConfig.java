@@ -1,6 +1,7 @@
 package com.oc.configuration;
 
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -22,7 +23,9 @@ import javax.crypto.spec.SecretKeySpec;
 
 @Configuration
 public class SpringSecurityConfig {
-    private String jwtKey = "daf3200f7b2975bf48b49c5c72693b65d6535d1f1e63fcdc4d02eaff025f98ac";
+
+    @Value("${jwt.secret.key}")
+    private String jwtKey;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
