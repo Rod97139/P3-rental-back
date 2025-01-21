@@ -10,6 +10,8 @@ public interface UserService {
 
     UserDto getUserById(Integer UserId);
 
+    UserDto getUserByEmail(String email);
+
     List<UserDto> getAllUsers();
 
     UserDto updateUser(Integer userId, UserDto updatedUser);
