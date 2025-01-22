@@ -1,14 +1,22 @@
 package com.oc.services.impl;
 
+import com.oc.dto.RentalDisplayAllDto;
+import com.oc.dto.RentalDisplayDto;
 import com.oc.dto.RentalDto;
+import com.oc.dto.RentalRequestDto;
 import com.oc.exception.ResourceNotFoundException;
 import com.oc.mapper.RentalMapper;
+import com.oc.mapper.UserMapper;
 import com.oc.model.Rental;
+import com.oc.model.User;
 import com.oc.repository.RentalRepository;
 import com.oc.services.RentalService;
+import com.oc.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,50 +24,52 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class RentalServiceImpl implements RentalService {
 
+    private final UserService userService;
     private RentalRepository rentalRepository;
 
     @Override
-    public RentalDto createRental(RentalDto rentalDto) {
+    public RentalDto createRental(RentalRequestDto rentalRequestDto, String ownerEmail) {
 
-        Rental rental = RentalMapper.mapToRental(rentalDto);
+
+        Rental rental = RentalMapper.mapToRental(rentalRequestDto);
+        User owner = UserMapper.mapToUser(userService.getUserByEmail(ownerEmail));
+        rental.setOwner(owner);
+
         Rental savedRental = rentalRepository.save(rental);
 
         return RentalMapper.mapToRentalDto(savedRental);
     }
 
     @Override
-    public RentalDto getRentalById(Integer rentalId) {
+    public RentalDisplayDto getRentalById(Integer rentalId) {
         Rental rental = rentalRepository.findById(rentalId).orElseThrow(
                 () -> new ResourceNotFoundException("Rental not found with id: " + rentalId)
         );
 
-        return RentalMapper.mapToRentalDto(rental);
+        return RentalMapper.mapToRentalDisplayDto(rental);
     }
 
     @Override
-    public List<RentalDto> getAllRentals() {
+    public List<RentalDisplayAllDto> getAllRentals() {
         List<Rental> rentals = rentalRepository.findAll();
 
         return rentals.stream()
-                .map((rental) -> RentalMapper.mapToRentalDto(rental))
+                .map(RentalMapper::mapToRentalDisplayAllDto)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public RentalDto updateRental(Integer rentalId, RentalDto updatedRental) {
+    public RentalRequestDto updateRental(Integer rentalId, RentalRequestDto updatedRental) {
         Rental rental = rentalRepository.findById(rentalId)
                 .orElseThrow(() -> new ResourceNotFoundException("Rental not found with id: " + rentalId));
         rental.setName(updatedRental.getName());
-        rental.setSurface(updatedRental.getSurface());
-        rental.setPrice(updatedRental.getPrice());
-        rental.setPicture(updatedRental.getPicture());
+        rental.setSurface(new BigDecimal(updatedRental.getSurface()));
+        rental.setPrice(new BigDecimal(updatedRental.getPrice()));
         rental.setDescription(updatedRental.getDescription());
-        rental.setOwner(updatedRental.getOwner());
-        rental.setUpdatedAt(updatedRental.getUpdatedAt());
+        rental.setUpdatedAt(Instant.now());
 
-        Rental updatedRentalObj = rentalRepository.save(rental);
-
-        return RentalMapper.mapToRentalDto(updatedRentalObj);
+        rentalRepository.save(rental);
+        return updatedRental;
     }
 
     @Override

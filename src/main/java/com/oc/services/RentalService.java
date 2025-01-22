@@ -1,18 +1,21 @@
 package com.oc.services;
 
+import com.oc.dto.RentalDisplayAllDto;
+import com.oc.dto.RentalDisplayDto;
 import com.oc.dto.RentalDto;
+import com.oc.dto.RentalRequestDto;
 
 import java.util.List;
 
 public interface RentalService {
 
-    RentalDto createRental(RentalDto rentalDto);
+    RentalDto createRental(RentalRequestDto rentalRequestDto, String ownerEmail);
 
-    RentalDto getRentalById(Integer rentalId);
+    RentalDisplayDto getRentalById(Integer rentalId);
 
-    List<RentalDto> getAllRentals();
+    List<RentalDisplayAllDto> getAllRentals();
 
-    RentalDto updateRental(Integer rentalId, RentalDto updatedRental);
+    RentalRequestDto updateRental(Integer rentalId, RentalRequestDto updatedRental);
 
     void deleteRental(Integer rentalId);
 }

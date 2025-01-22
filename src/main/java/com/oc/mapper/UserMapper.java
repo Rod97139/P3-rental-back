@@ -11,9 +11,7 @@ public class UserMapper {
                 user.getName(),
                 user.getPassword(),
                 user.getCreatedAt(),
-                user.getUpdatedAt(),
-                user.getMessages(),
-                user.getRentals()
+                user.getUpdatedAt()
         );
     }
 
@@ -24,9 +22,7 @@ public class UserMapper {
                 userDto.getName(),
                 userDto.getPassword(),
                 userDto.getCreatedAt(),
-                userDto.getUpdatedAt(),
-                userDto.getMessages(),
-                userDto.getRentals()
+                userDto.getUpdatedAt()
         );
     }
 }
