@@ -2,7 +2,6 @@ package com.oc.controllers;
 
 import com.oc.dto.RentalDisplayAllDto;
 import com.oc.dto.RentalDisplayDto;
-import com.oc.dto.RentalDto;
 import com.oc.dto.RentalRequestDto;
 import com.oc.services.JWTService;
 import com.oc.services.RentalService;
@@ -15,9 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

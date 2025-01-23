@@ -1,6 +1,5 @@
 package com.oc.services.impl;
 
-import com.oc.dto.MessageDto;
 import com.oc.dto.MessageRequestDto;
 import com.oc.mapper.MessageMapper;
 import com.oc.mapper.RentalMapper;
@@ -25,7 +24,7 @@ public class MessageServiceImpl implements MessageService {
 
 
     @Override
-    public MessageDto createMessage(MessageRequestDto messageRequestDto) {
+    public void createMessage(MessageRequestDto messageRequestDto) {
         Message message = MessageMapper.mapToMessage(messageRequestDto);
         User user = UserMapper.mapToUser(userService.getUserById(messageRequestDto.getUser_id()));
         Rental rental = RentalMapper.mapToRental(rentalService.getRentalDtoById(messageRequestDto.getRental_id()));
@@ -33,6 +32,6 @@ public class MessageServiceImpl implements MessageService {
         message.setUser(user);
         Message savedMessage = messageRepository.save(message);
 
-        return MessageMapper.mapToMessageDto(savedMessage);
+        MessageMapper.mapToMessageDto(savedMessage);
     }
 }
