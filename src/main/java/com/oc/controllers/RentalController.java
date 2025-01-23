@@ -81,14 +81,19 @@ public class RentalController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RentalRequestDto> updateRental(
+    public ResponseEntity<?> updateRental(
             @PathVariable Integer id,
             @RequestPart("name") String name,
             @RequestPart("surface") String surface,
             @RequestPart("price") String price,
-            @RequestPart("description") String description
+            @RequestPart("description") String description,
+            HttpServletRequest request
     ) {
+        String token = request.getHeader("Authorization").substring(7);
+        String email = jwtService.getSubjectFromToken(token);
+
         RentalRequestDto rentalRequestDto = new RentalRequestDto(name, surface, price, description);
-        return new ResponseEntity<>(rentalService.updateRental(id, rentalRequestDto), HttpStatus.OK);
+
+        return new ResponseEntity<>(rentalService.updateRental(id, rentalRequestDto, email), HttpStatus.OK);
     }
 }

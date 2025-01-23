@@ -27,5 +27,4 @@ public class RentalDto {
     private User owner;
     private Instant createdAt;
     private Instant updatedAt;
-    private Set<Message> messages = new LinkedHashSet<>();
 }

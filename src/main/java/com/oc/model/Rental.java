@@ -47,7 +47,4 @@ public class Rental {
 
     @Column(name = "updated_at")
     private Instant updatedAt;
-
-    @OneToMany(mappedBy = "rental")
-    private Set<Message> messages = new LinkedHashSet<>();
 }

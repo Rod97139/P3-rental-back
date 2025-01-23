@@ -21,8 +21,7 @@ public class RentalMapper {
                 rental.getDescription(),
                 rental.getOwner(),
                 rental.getCreatedAt(),
-                rental.getUpdatedAt(),
-                rental.getMessages()
+                rental.getUpdatedAt()
         );
     }
 
@@ -36,8 +35,7 @@ public class RentalMapper {
                 rentalDto.getDescription(),
                 rentalDto.getOwner(),
                 rentalDto.getCreatedAt(),
-                rentalDto.getUpdatedAt(),
-                rentalDto.getMessages()
+                rentalDto.getUpdatedAt()
         );
     }
 
@@ -51,8 +49,7 @@ public class RentalMapper {
                 rentalRequestDto.getDescription(),
                 new User(),
                 Instant.now(),
-                Instant.now(),
-                null
+                Instant.now()
         );
     }
 

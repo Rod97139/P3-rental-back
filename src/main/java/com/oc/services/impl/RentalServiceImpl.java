@@ -59,9 +59,13 @@ public class RentalServiceImpl implements RentalService {
     }
 
     @Override
-    public RentalRequestDto updateRental(Integer rentalId, RentalRequestDto updatedRental) {
+    public RentalRequestDto updateRental(Integer rentalId, RentalRequestDto updatedRental, String email) {
         Rental rental = rentalRepository.findById(rentalId)
                 .orElseThrow(() -> new ResourceNotFoundException("Rental not found with id: " + rentalId));
+
+        if (!rental.getOwner().getEmail().equals(email))
+            throw new ResourceNotFoundException("You are not the owner of this rental");
+
         rental.setName(updatedRental.getName());
         rental.setSurface(new BigDecimal(updatedRental.getSurface()));
         rental.setPrice(new BigDecimal(updatedRental.getPrice()));
@@ -78,6 +82,13 @@ public class RentalServiceImpl implements RentalService {
         Rental rental = rentalRepository.findById(rentalId)
                 .orElseThrow(() -> new ResourceNotFoundException("Rental not found with id: " + rentalId));
         rentalRepository.deleteById(rentalId);
+    }
 
+    public RentalDto getRentalDtoById(Integer rentalId) {
+        Rental rental = rentalRepository.findById(rentalId).orElseThrow(
+                () -> new ResourceNotFoundException("Rental not found with id: " + rentalId)
+        );
+
+        return RentalMapper.mapToRentalDto(rental);
     }
 }
