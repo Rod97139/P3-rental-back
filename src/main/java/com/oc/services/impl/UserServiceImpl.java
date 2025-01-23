@@ -1,5 +1,6 @@
 package com.oc.services.impl;
 
+import com.oc.dto.UserDisplayDto;
 import com.oc.dto.UserDto;
 import com.oc.exception.ResourceNotFoundException;
 import com.oc.mapper.UserMapper;
@@ -29,6 +30,7 @@ public class UserServiceImpl implements UserService {
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
         userDto.setCreatedAt(now);
+        userDto.setUpdatedAt(now);
 
         User user = UserMapper.mapToUser(userDto);
         User SavedUser = userRepository.save(user);
@@ -54,6 +56,16 @@ public class UserServiceImpl implements UserService {
         );
 
         return UserMapper.mapToUserDto(user);
+    }
+
+    @Override
+    public UserDisplayDto getUserDisplayById(Integer userId) {
+
+            User user = userRepository.findById(userId).orElseThrow(
+                    () -> new ResourceNotFoundException("User not found with id: " + userId)
+            );
+
+            return UserMapper.mapToUserDisplayDto(user);
     }
 
     @Override
@@ -88,5 +100,15 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + userId));
         userRepository.deleteById(userId);
+    }
+
+    @Override
+    public UserDisplayDto getUserDisplayByEmail(String email) {
+
+            User user = userRepository.findByEmail(email).orElseThrow(
+                    () -> new ResourceNotFoundException("User not found with email: " + email)
+            );
+
+            return UserMapper.mapToUserDisplayDto(user);
     }
 }

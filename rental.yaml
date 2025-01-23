@@ -1,0 +1,929 @@
+
+"openapi": "3.0.0"
+"info":
+  "title": "rental"
+  "version": "1.0.0"
+"servers":
+  -
+    "url": "http://localhost:3001"
+"components":
+  "securitySchemes":
+    "noauthAuth":
+      "type": "http"
+      "scheme": "noauth"
+    "bearerAuth":
+      "type": "http"
+      "scheme": "bearer"
+"security":
+  -
+    "bearerAuth": []
+"tags":
+  -
+    "name": "auth"
+  -
+    "name": "rentals"
+  -
+    "name": "messages"
+  -
+    "name": "user"
+"paths":
+  "/api/auth/register":
+    "post":
+      "tags":
+        - "auth"
+      "summary": "register"
+      "requestBody":
+        "content":
+          "application/json":
+            "schema":
+              "type": "object"
+              "example":
+                "email": "test137@test.com"
+                "name": "test TEST"
+                "password": "test!31"
+      "security":
+        -
+          "noauthAuth": []
+      "responses":
+        "201":
+          "description": "Created"
+          "headers":
+            "Vary":
+              "schema":
+                "type": "string"
+                "example": "Access-Control-Request-Headers"
+            "X-Content-Type-Options":
+              "schema":
+                "type": "string"
+                "example": "nosniff"
+            "X-XSS-Protection":
+              "schema":
+                "type": "integer"
+                "example": "0"
+            "Cache-Control":
+              "schema":
+                "type": "string"
+                "example": "no-cache, no-store, max-age=0, must-revalidate"
+            "Pragma":
+              "schema":
+                "type": "string"
+                "example": "no-cache"
+            "Expires":
+              "schema":
+                "type": "integer"
+                "example": "0"
+            "X-Frame-Options":
+              "schema":
+                "type": "string"
+                "example": "DENY"
+            "Content-Type":
+              "schema":
+                "type": "string"
+                "example": "application/json"
+            "Transfer-Encoding":
+              "schema":
+                "type": "string"
+                "example": "chunked"
+            "Date":
+              "schema":
+                "type": "string"
+                "example": "Thu, 23 Jan 2025 18:38:16 GMT"
+            "Keep-Alive":
+              "schema":
+                "type": "string"
+                "example": "timeout=60"
+            "Connection":
+              "schema":
+                "type": "string"
+                "example": "keep-alive"
+          "content":
+            "application/json":
+              "schema":
+                "type": "object"
+              "example":
+                "token": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoidGVzdDEzNkB0ZXN0LmNvbSIsImV4cCI6MTczNzc0Mzg5NiwiaWF0IjoxNzM3NjU3NDk2fQ.PS1jZUEqQoKbkk7GGcKqh4gV7lB23BDm47WnhTKtFUU"
+  "/api/auth/login":
+    "post":
+      "tags":
+        - "auth"
+      "summary": "login"
+      "requestBody":
+        "content":
+          "application/json":
+            "schema":
+              "type": "object"
+              "example":
+                "email": "test137@test.com"
+                "password": "test!31"
+      "security":
+        -
+          "noauthAuth": []
+      "responses":
+        "200":
+          "description": "OK"
+          "headers":
+            "Vary":
+              "schema":
+                "type": "string"
+                "example": "Access-Control-Request-Headers"
+            "X-Content-Type-Options":
+              "schema":
+                "type": "string"
+                "example": "nosniff"
+            "X-XSS-Protection":
+              "schema":
+                "type": "integer"
+                "example": "0"
+            "Cache-Control":
+              "schema":
+                "type": "string"
+                "example": "no-cache, no-store, max-age=0, must-revalidate"
+            "Pragma":
+              "schema":
+                "type": "string"
+                "example": "no-cache"
+            "Expires":
+              "schema":
+                "type": "integer"
+                "example": "0"
+            "X-Frame-Options":
+              "schema":
+                "type": "string"
+                "example": "DENY"
+            "Content-Type":
+              "schema":
+                "type": "string"
+                "example": "application/json"
+            "Transfer-Encoding":
+              "schema":
+                "type": "string"
+                "example": "chunked"
+            "Date":
+              "schema":
+                "type": "string"
+                "example": "Thu, 23 Jan 2025 18:38:03 GMT"
+            "Keep-Alive":
+              "schema":
+                "type": "string"
+                "example": "timeout=60"
+            "Connection":
+              "schema":
+                "type": "string"
+                "example": "keep-alive"
+          "content":
+            "application/json":
+              "schema":
+                "type": "object"
+              "example":
+                "token": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoidGVzdDEyOEB0ZXN0LmNvbSIsImV4cCI6MTczNzc0Mzg4MywiaWF0IjoxNzM3NjU3NDgzfQ.5brnGyoFoXrZ2YFR1zgJi9tOpSO1HNx-OK2pujiDV3Y"
+  "/api/auth/me":
+    "get":
+      "tags":
+        - "auth"
+      "summary": "me"
+      "security":
+        -
+          "bearerAuth": []
+      "responses":
+        "200":
+          "description": "OK"
+          "headers":
+            "Vary":
+              "schema":
+                "type": "string"
+                "example": "Access-Control-Request-Headers"
+            "X-Content-Type-Options":
+              "schema":
+                "type": "string"
+                "example": "nosniff"
+            "X-XSS-Protection":
+              "schema":
+                "type": "integer"
+                "example": "0"
+            "Cache-Control":
+              "schema":
+                "type": "string"
+                "example": "no-cache, no-store, max-age=0, must-revalidate"
+            "Pragma":
+              "schema":
+                "type": "string"
+                "example": "no-cache"
+            "Expires":
+              "schema":
+                "type": "integer"
+                "example": "0"
+            "X-Frame-Options":
+              "schema":
+                "type": "string"
+                "example": "DENY"
+            "Content-Type":
+              "schema":
+                "type": "string"
+                "example": "application/json"
+            "Transfer-Encoding":
+              "schema":
+                "type": "string"
+                "example": "chunked"
+            "Date":
+              "schema":
+                "type": "string"
+                "example": "Thu, 23 Jan 2025 20:20:02 GMT"
+            "Keep-Alive":
+              "schema":
+                "type": "string"
+                "example": "timeout=60"
+            "Connection":
+              "schema":
+                "type": "string"
+                "example": "keep-alive"
+          "content":
+            "application/json":
+              "schema":
+                "type": "object"
+              "example":
+                "id": 34
+                "name": "test TEST"
+                "email": "test137@test.com"
+                "created_at": "2025/01/23"
+                "updated_at": "2025/01/23"
+        "401":
+          "description": "Unauthorized"
+          "headers":
+            "WWW-Authenticate":
+              "schema":
+                "type": "string"
+                "example": "Bearer"
+            "X-Content-Type-Options":
+              "schema":
+                "type": "string"
+                "example": "nosniff"
+            "X-XSS-Protection":
+              "schema":
+                "type": "integer"
+                "example": "0"
+            "Cache-Control":
+              "schema":
+                "type": "string"
+                "example": "no-cache, no-store, max-age=0, must-revalidate"
+            "Pragma":
+              "schema":
+                "type": "string"
+                "example": "no-cache"
+            "Expires":
+              "schema":
+                "type": "integer"
+                "example": "0"
+            "X-Frame-Options":
+              "schema":
+                "type": "string"
+                "example": "DENY"
+            "Content-Length":
+              "schema":
+                "type": "integer"
+                "example": "0"
+            "Date":
+              "schema":
+                "type": "string"
+                "example": "Thu, 23 Jan 2025 20:26:30 GMT"
+            "Keep-Alive":
+              "schema":
+                "type": "string"
+                "example": "timeout=60"
+            "Connection":
+              "schema":
+                "type": "string"
+                "example": "keep-alive"
+          "content":
+            "text/plain":
+              "schema":
+                "type": "string"
+              "example": null
+  "/api/rentals":
+    "get":
+      "tags":
+        - "rentals"
+      "summary": "get All"
+      "security":
+        -
+          "bearerAuth": []
+      "responses":
+        "200":
+          "description": "OK"
+          "headers":
+            "Vary":
+              "schema":
+                "type": "string"
+                "example": "Access-Control-Request-Headers"
+            "X-Content-Type-Options":
+              "schema":
+                "type": "string"
+                "example": "nosniff"
+            "X-XSS-Protection":
+              "schema":
+                "type": "integer"
+                "example": "0"
+            "Cache-Control":
+              "schema":
+                "type": "string"
+                "example": "no-cache, no-store, max-age=0, must-revalidate"
+            "Pragma":
+              "schema":
+                "type": "string"
+                "example": "no-cache"
+            "Expires":
+              "schema":
+                "type": "integer"
+                "example": "0"
+            "X-Frame-Options":
+              "schema":
+                "type": "string"
+                "example": "DENY"
+            "Content-Type":
+              "schema":
+                "type": "string"
+                "example": "application/json"
+            "Transfer-Encoding":
+              "schema":
+                "type": "string"
+                "example": "chunked"
+            "Date":
+              "schema":
+                "type": "string"
+                "example": "Thu, 23 Jan 2025 18:37:25 GMT"
+            "Keep-Alive":
+              "schema":
+                "type": "string"
+                "example": "timeout=60"
+            "Connection":
+              "schema":
+                "type": "string"
+                "example": "keep-alive"
+          "content":
+            "application/json":
+              "schema":
+                "type": "object"
+              "example":
+                "rentals":
+                  -
+                    "id": 2
+                    "name": "name"
+                    "surface": 50
+                    "price": 200
+                    "picture": "/assets/images/plantly.png"
+                    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam a lectus eleifend, varius massa ac, mollis tortor. Quisque ipsum nulla, faucibus ac metus a, eleifend efficitur augue. Integer vel pulvinar ipsum. Praesent mollis neque sed sagittis ultricies. Suspendisse congue ligula at justo molestie, eget cursus nulla tincidunt. Pellentesque elementum rhoncus arcu, viverra gravida turpis mattis in. Maecenas tempor elementum lorem vel ultricies. Nam tempus laoreet eros, et viverra libero tincidunt a. Nunc vel nisi vulputate, sodales massa eu, varius erat."
+                    "owner_id": 29
+                    "createdAt": "2025-01-22T19:41:56Z"
+                    "updatedAt": "2025-01-22T23:37:45Z"
+                  -
+                    "id": 3
+                    "name": "name"
+                    "surface": 50
+                    "price": 200
+                    "picture": "/assets/images/plantly.png"
+                    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam a lectus eleifend, varius massa ac, mollis tortor. Quisque ipsum nulla, faucibus ac metus a, eleifend efficitur augue. Integer vel pulvinar ipsum. Praesent mollis neque sed sagittis ultricies. Suspendisse congue ligula at justo molestie, eget cursus nulla tincidunt. Pellentesque elementum rhoncus arcu, viverra gravida turpis mattis in. Maecenas tempor elementum lorem vel ultricies. Nam tempus laoreet eros, et viverra libero tincidunt a. Nunc vel nisi vulputate, sodales massa eu, varius erat."
+                    "owner_id": 29
+                    "createdAt": "2025-01-22T19:45:23Z"
+                    "updatedAt": "2025-01-22T19:45:23Z"
+                  -
+                    "id": 4
+                    "name": "name"
+                    "surface": 50
+                    "price": 200
+                    "picture": "/assets/images/plantly.png"
+                    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam a lectus eleifend, varius massa ac, mollis tortor. Quisque ipsum nulla, faucibus ac metus a, eleifend efficitur augue. Integer vel pulvinar ipsum. Praesent mollis neque sed sagittis ultricies. Suspendisse congue ligula at justo molestie, eget cursus nulla tincidunt. Pellentesque elementum rhoncus arcu, viverra gravida turpis mattis in. Maecenas tempor elementum lorem vel ultricies. Nam tempus laoreet eros, et viverra libero tincidunt a. Nunc vel nisi vulputate, sodales massa eu, varius erat."
+                    "owner_id": 29
+                    "createdAt": "2025-01-22T19:47:41Z"
+                    "updatedAt": "2025-01-22T19:47:41Z"
+                  -
+                    "id": 5
+                    "name": "name"
+                    "surface": 50
+                    "price": 200
+                    "picture": "http://localhost:3001/assets/images/plantly.png"
+                    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam a lectus eleifend, varius massa ac, mollis tortor. Quisque ipsum nulla, faucibus ac metus a, eleifend efficitur augue. Integer vel pulvinar ipsum. Praesent mollis neque sed sagittis ultricies. Suspendisse congue ligula at justo molestie, eget cursus nulla tincidunt. Pellentesque elementum rhoncus arcu, viverra gravida turpis mattis in. Maecenas tempor elementum lorem vel ultricies. Nam tempus laoreet eros, et viverra libero tincidunt a. Nunc vel nisi vulputate, sodales massa eu, varius erat."
+                    "owner_id": 29
+                    "createdAt": "2025-01-22T19:48:07Z"
+                    "updatedAt": "2025-01-22T19:48:07Z"
+                  -
+                    "id": 6
+                    "name": "name"
+                    "surface": 50
+                    "price": 200
+                    "picture": "http://localhost:3001/assets/images/plantly.png"
+                    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam a lectus eleifend, varius massa ac, mollis tortor. Quisque ipsum nulla, faucibus ac metus a, eleifend efficitur augue. Integer vel pulvinar ipsum. Praesent mollis neque sed sagittis ultricies. Suspendisse congue ligula at justo molestie, eget cursus nulla tincidunt. Pellentesque elementum rhoncus arcu, viverra gravida turpis mattis in. Maecenas tempor elementum lorem vel ultricies. Nam tempus laoreet eros, et viverra libero tincidunt a. Nunc vel nisi vulputate, sodales massa eu, varius erat."
+                    "owner_id": 29
+                    "createdAt": "2025-01-22T20:07:37Z"
+                    "updatedAt": "2025-01-22T20:07:37Z"
+                  -
+                    "id": 7
+                    "name": "test"
+                    "surface": 50
+                    "price": 200
+                    "picture": "http://localhost:3001/assets/images/plantly.png"
+                    "description": "testdfffffffffffffffffffffff"
+                    "owner_id": 26
+                    "createdAt": "2025-01-22T20:24:12Z"
+                    "updatedAt": "2025-01-23T00:09:58Z"
+                  -
+                    "id": 8
+                    "name": "name"
+                    "surface": 50
+                    "price": 200
+                    "picture": "http://localhost:3001/assets/images/plantly.png"
+                    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam a lectus eleifend, varius massa ac, mollis tortor. Quisque ipsum nulla, faucibus ac metus a, eleifend efficitur augue. Integer vel pulvinar ipsum. Praesent mollis neque sed sagittis ultricies. Suspendisse congue ligula at justo molestie, eget cursus nulla tincidunt. Pellentesque elementum rhoncus arcu, viverra gravida turpis mattis in. Maecenas tempor elementum lorem vel ultricies. Nam tempus laoreet eros, et viverra libero tincidunt a. Nunc vel nisi vulputate, sodales massa eu, varius erat."
+                    "owner_id": 29
+                    "createdAt": "2025-01-22T20:47:02Z"
+                    "updatedAt": "2025-01-22T20:47:02Z"
+                  -
+                    "id": 9
+                    "name": "name"
+                    "surface": 50
+                    "price": 200
+                    "picture": "http://localhost:3001/assets/images/plantly.png"
+                    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam a lectus eleifend, varius massa ac, mollis tortor. Quisque ipsum nulla, faucibus ac metus a, eleifend efficitur augue. Integer vel pulvinar ipsum. Praesent mollis neque sed sagittis ultricies. Suspendisse congue ligula at justo molestie, eget cursus nulla tincidunt. Pellentesque elementum rhoncus arcu, viverra gravida turpis mattis in. Maecenas tempor elementum lorem vel ultricies. Nam tempus laoreet eros, et viverra libero tincidunt a. Nunc vel nisi vulputate, sodales massa eu, varius erat."
+                    "owner_id": 26
+                    "createdAt": "2025-01-22T20:48:22Z"
+                    "updatedAt": "2025-01-23T18:32:41Z"
+                  -
+                    "id": 10
+                    "name": "name"
+                    "surface": 50
+                    "price": 200
+                    "picture": "http://localhost:3001/assets/images/plantly.png"
+                    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam a lectus eleifend, varius massa ac, mollis tortor. Quisque ipsum nulla, faucibus ac metus a, eleifend efficitur augue. Integer vel pulvinar ipsum. Praesent mollis neque sed sagittis ultricies. Suspendisse congue ligula at justo molestie, eget cursus nulla tincidunt. Pellentesque elementum rhoncus arcu, viverra gravida turpis mattis in. Maecenas tempor elementum lorem vel ultricies. Nam tempus laoreet eros, et viverra libero tincidunt a. Nunc vel nisi vulputate, sodales massa eu, varius erat."
+                    "owner_id": 26
+                    "createdAt": "2025-01-22T21:14:47Z"
+                    "updatedAt": "2025-01-23T18:30:45Z"
+                  -
+                    "id": 11
+                    "name": "test"
+                    "surface": 20
+                    "price": 50
+                    "picture": "/assets/images/plantly.png"
+                    "description": "test"
+                    "owner_id": 29
+                    "createdAt": "2025-01-22T21:46:44Z"
+                    "updatedAt": "2025-01-22T21:46:44Z"
+                  -
+                    "id": 12
+                    "name": "name"
+                    "surface": 50
+                    "price": 200
+                    "picture": "http://localhost:3001/assets/images/plantly.png"
+                    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam a lectus eleifend, varius massa ac, mollis tortor. Quisque ipsum nulla, faucibus ac metus a, eleifend efficitur augue. Integer vel pulvinar ipsum. Praesent mollis neque sed sagittis ultricies. Suspendisse congue ligula at justo molestie, eget cursus nulla tincidunt. Pellentesque elementum rhoncus arcu, viverra gravida turpis mattis in. Maecenas tempor elementum lorem vel ultricies. Nam tempus laoreet eros, et viverra libero tincidunt a. Nunc vel nisi vulputate, sodales massa eu, varius erat."
+                    "owner_id": 26
+                    "createdAt": "2025-01-23T00:11:10Z"
+                    "updatedAt": "2025-01-23T00:11:10Z"
+                  -
+                    "id": 13
+                    "name": "name"
+                    "surface": 50
+                    "price": 200
+                    "picture": "http://localhost:3001/assets/images/plantly.png"
+                    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam a lectus eleifend, varius massa ac, mollis tortor. Quisque ipsum nulla, faucibus ac metus a, eleifend efficitur augue. Integer vel pulvinar ipsum. Praesent mollis neque sed sagittis ultricies. Suspendisse congue ligula at justo molestie, eget cursus nulla tincidunt. Pellentesque elementum rhoncus arcu, viverra gravida turpis mattis in. Maecenas tempor elementum lorem vel ultricies. Nam tempus laoreet eros, et viverra libero tincidunt a. Nunc vel nisi vulputate, sodales massa eu, varius erat."
+                    "owner_id": 26
+                    "createdAt": "2025-01-23T18:36:17Z"
+                    "updatedAt": "2025-01-23T18:36:17Z"
+    "post":
+      "tags":
+        - "rentals"
+      "summary": "create"
+      "requestBody":
+        "content":
+          "multipart/form-data":
+            "schema":
+              "type": "object"
+              "properties":
+                "name":
+                  "type": "string"
+                  "example": "name"
+                "surface":
+                  "type": "integer"
+                  "example": "50"
+                "price":
+                  "type": "integer"
+                  "example": "200"
+                "picture":
+                  "type": "string"
+                  "format": "binary"
+                "description":
+                  "type": "string"
+                  "example": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam a lectus eleifend, varius massa ac, mollis tortor. Quisque ipsum nulla, faucibus ac metus a, eleifend efficitur augue. Integer vel pulvinar ipsum. Praesent mollis neque sed sagittis ultricies. Suspendisse congue ligula at justo molestie, eget cursus nulla tincidunt. Pellentesque elementum rhoncus arcu, viverra gravida turpis mattis in. Maecenas tempor elementum lorem vel ultricies. Nam tempus laoreet eros, et viverra libero tincidunt a. Nunc vel nisi vulputate, sodales massa eu, varius erat."
+      "security":
+        -
+          "bearerAuth": []
+      "responses":
+        "201":
+          "description": "Created"
+          "headers":
+            "Vary":
+              "schema":
+                "type": "string"
+                "example": "Access-Control-Request-Headers"
+            "X-Content-Type-Options":
+              "schema":
+                "type": "string"
+                "example": "nosniff"
+            "X-XSS-Protection":
+              "schema":
+                "type": "integer"
+                "example": "0"
+            "Cache-Control":
+              "schema":
+                "type": "string"
+                "example": "no-cache, no-store, max-age=0, must-revalidate"
+            "Pragma":
+              "schema":
+                "type": "string"
+                "example": "no-cache"
+            "Expires":
+              "schema":
+                "type": "integer"
+                "example": "0"
+            "X-Frame-Options":
+              "schema":
+                "type": "string"
+                "example": "DENY"
+            "Content-Type":
+              "schema":
+                "type": "string"
+                "example": "application/json"
+            "Transfer-Encoding":
+              "schema":
+                "type": "string"
+                "example": "chunked"
+            "Date":
+              "schema":
+                "type": "string"
+                "example": "Thu, 23 Jan 2025 20:07:23 GMT"
+            "Keep-Alive":
+              "schema":
+                "type": "string"
+                "example": "timeout=60"
+            "Connection":
+              "schema":
+                "type": "string"
+                "example": "keep-alive"
+          "content":
+            "application/json":
+              "schema":
+                "type": "object"
+              "example":
+                "message": "Rental created !"
+  "/api/rentals/2":
+    "get":
+      "tags":
+        - "rentals"
+      "summary": "get"
+      "security":
+        -
+          "bearerAuth": []
+      "responses":
+        "200":
+          "description": "OK"
+          "headers":
+            "Vary":
+              "schema":
+                "type": "string"
+                "example": "Access-Control-Request-Headers"
+            "X-Content-Type-Options":
+              "schema":
+                "type": "string"
+                "example": "nosniff"
+            "X-XSS-Protection":
+              "schema":
+                "type": "integer"
+                "example": "0"
+            "Cache-Control":
+              "schema":
+                "type": "string"
+                "example": "no-cache, no-store, max-age=0, must-revalidate"
+            "Pragma":
+              "schema":
+                "type": "string"
+                "example": "no-cache"
+            "Expires":
+              "schema":
+                "type": "integer"
+                "example": "0"
+            "X-Frame-Options":
+              "schema":
+                "type": "string"
+                "example": "DENY"
+            "Content-Type":
+              "schema":
+                "type": "string"
+                "example": "application/json"
+            "Transfer-Encoding":
+              "schema":
+                "type": "string"
+                "example": "chunked"
+            "Date":
+              "schema":
+                "type": "string"
+                "example": "Thu, 23 Jan 2025 18:37:14 GMT"
+            "Keep-Alive":
+              "schema":
+                "type": "string"
+                "example": "timeout=60"
+            "Connection":
+              "schema":
+                "type": "string"
+                "example": "keep-alive"
+          "content":
+            "application/json":
+              "schema":
+                "type": "object"
+              "example":
+                "id": 2
+                "name": "name"
+                "surface": 50
+                "price": 200
+                "picture":
+                  - "/assets/images/plantly.png"
+                "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam a lectus eleifend, varius massa ac, mollis tortor. Quisque ipsum nulla, faucibus ac metus a, eleifend efficitur augue. Integer vel pulvinar ipsum. Praesent mollis neque sed sagittis ultricies. Suspendisse congue ligula at justo molestie, eget cursus nulla tincidunt. Pellentesque elementum rhoncus arcu, viverra gravida turpis mattis in. Maecenas tempor elementum lorem vel ultricies. Nam tempus laoreet eros, et viverra libero tincidunt a. Nunc vel nisi vulputate, sodales massa eu, varius erat."
+                "owner_id": 29
+                "createdAt": "2025-01-22T19:41:56Z"
+                "updatedAt": "2025-01-22T23:37:45Z"
+  "/api/rentals/9":
+    "put":
+      "tags":
+        - "rentals"
+      "summary": "update"
+      "requestBody":
+        "content":
+          "multipart/form-data":
+            "schema":
+              "type": "object"
+              "properties":
+                "name":
+                  "type": "string"
+                  "example": "name"
+                "surface":
+                  "type": "integer"
+                  "example": "50"
+                "price":
+                  "type": "integer"
+                  "example": "200"
+                "description":
+                  "type": "string"
+                  "example": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam a lectus eleifend, varius massa ac, mollis tortor. Quisque ipsum nulla, faucibus ac metus a, eleifend efficitur augue. Integer vel pulvinar ipsum. Praesent mollis neque sed sagittis ultricies. Suspendisse congue ligula at justo molestie, eget cursus nulla tincidunt. Pellentesque elementum rhoncus arcu, viverra gravida turpis mattis in. Maecenas tempor elementum lorem vel ultricies. Nam tempus laoreet eros, et viverra libero tincidunt a. Nunc vel nisi vulputate, sodales massa eu, varius erat."
+      "security":
+        -
+          "bearerAuth": []
+      "responses":
+        "200":
+          "description": "OK"
+          "headers":
+            "Vary":
+              "schema":
+                "type": "string"
+                "example": "Access-Control-Request-Headers"
+            "X-Content-Type-Options":
+              "schema":
+                "type": "string"
+                "example": "nosniff"
+            "X-XSS-Protection":
+              "schema":
+                "type": "integer"
+                "example": "0"
+            "Cache-Control":
+              "schema":
+                "type": "string"
+                "example": "no-cache, no-store, max-age=0, must-revalidate"
+            "Pragma":
+              "schema":
+                "type": "string"
+                "example": "no-cache"
+            "Expires":
+              "schema":
+                "type": "integer"
+                "example": "0"
+            "X-Frame-Options":
+              "schema":
+                "type": "string"
+                "example": "DENY"
+            "Content-Type":
+              "schema":
+                "type": "string"
+                "example": "application/json"
+            "Transfer-Encoding":
+              "schema":
+                "type": "string"
+                "example": "chunked"
+            "Date":
+              "schema":
+                "type": "string"
+                "example": "Thu, 23 Jan 2025 20:17:34 GMT"
+            "Keep-Alive":
+              "schema":
+                "type": "string"
+                "example": "timeout=60"
+            "Connection":
+              "schema":
+                "type": "string"
+                "example": "keep-alive"
+          "content":
+            "application/json":
+              "schema":
+                "type": "object"
+              "example":
+                "message": "Rental updated !"
+  "/api/messages":
+    "post":
+      "tags":
+        - "messages"
+      "summary": "message"
+      "requestBody":
+        "content":
+          "application/json":
+            "schema":
+              "type": "object"
+              "example":
+                "message": "mon message"
+                "user_id": 26
+                "rental_id": 2
+      "security":
+        -
+          "bearerAuth": []
+      "responses":
+        "200":
+          "description": "OK"
+          "headers":
+            "Vary":
+              "schema":
+                "type": "string"
+                "example": "Access-Control-Request-Headers"
+            "X-Content-Type-Options":
+              "schema":
+                "type": "string"
+                "example": "nosniff"
+            "X-XSS-Protection":
+              "schema":
+                "type": "integer"
+                "example": "0"
+            "Cache-Control":
+              "schema":
+                "type": "string"
+                "example": "no-cache, no-store, max-age=0, must-revalidate"
+            "Pragma":
+              "schema":
+                "type": "string"
+                "example": "no-cache"
+            "Expires":
+              "schema":
+                "type": "integer"
+                "example": "0"
+            "X-Frame-Options":
+              "schema":
+                "type": "string"
+                "example": "DENY"
+            "Content-Type":
+              "schema":
+                "type": "string"
+                "example": "application/json"
+            "Transfer-Encoding":
+              "schema":
+                "type": "string"
+                "example": "chunked"
+            "Date":
+              "schema":
+                "type": "string"
+                "example": "Thu, 23 Jan 2025 18:28:51 GMT"
+            "Keep-Alive":
+              "schema":
+                "type": "string"
+                "example": "timeout=60"
+            "Connection":
+              "schema":
+                "type": "string"
+                "example": "keep-alive"
+          "content":
+            "application/json":
+              "schema":
+                "type": "object"
+              "example":
+                "message": "Message sent with success"
+        "400":
+          "description": "Bad Request"
+          "headers":
+            "Vary":
+              "schema":
+                "type": "string"
+                "example": "Access-Control-Request-Headers"
+            "X-Content-Type-Options":
+              "schema":
+                "type": "string"
+                "example": "nosniff"
+            "X-XSS-Protection":
+              "schema":
+                "type": "integer"
+                "example": "0"
+            "Cache-Control":
+              "schema":
+                "type": "string"
+                "example": "no-cache, no-store, max-age=0, must-revalidate"
+            "Pragma":
+              "schema":
+                "type": "string"
+                "example": "no-cache"
+            "Expires":
+              "schema":
+                "type": "integer"
+                "example": "0"
+            "X-Frame-Options":
+              "schema":
+                "type": "string"
+                "example": "DENY"
+            "Content-Type":
+              "schema":
+                "type": "string"
+                "example": "application/json"
+            "Transfer-Encoding":
+              "schema":
+                "type": "string"
+                "example": "chunked"
+            "Date":
+              "schema":
+                "type": "string"
+                "example": "Thu, 23 Jan 2025 18:28:34 GMT"
+            "Connection":
+              "schema":
+                "type": "string"
+                "example": "close"
+          "content":
+            "application/json":
+              "schema":
+                "type": "object"
+              "example":
+                "message": "You are not allowed to send a message to another user"
+  "/api/user/29":
+    "get":
+      "tags":
+        - "user"
+      "summary": "user"
+      "security":
+        -
+          "bearerAuth": []
+      "responses":
+        "200":
+          "description": "OK"
+          "headers":
+            "Vary":
+              "schema":
+                "type": "string"
+                "example": "Access-Control-Request-Headers"
+            "X-Content-Type-Options":
+              "schema":
+                "type": "string"
+                "example": "nosniff"
+            "X-XSS-Protection":
+              "schema":
+                "type": "integer"
+                "example": "0"
+            "Cache-Control":
+              "schema":
+                "type": "string"
+                "example": "no-cache, no-store, max-age=0, must-revalidate"
+            "Pragma":
+              "schema":
+                "type": "string"
+                "example": "no-cache"
+            "Expires":
+              "schema":
+                "type": "integer"
+                "example": "0"
+            "X-Frame-Options":
+              "schema":
+                "type": "string"
+                "example": "DENY"
+            "Content-Type":
+              "schema":
+                "type": "string"
+                "example": "application/json"
+            "Transfer-Encoding":
+              "schema":
+                "type": "string"
+                "example": "chunked"
+            "Date":
+              "schema":
+                "type": "string"
+                "example": "Thu, 23 Jan 2025 20:34:19 GMT"
+            "Keep-Alive":
+              "schema":
+                "type": "string"
+                "example": "timeout=60"
+            "Connection":
+              "schema":
+                "type": "string"
+                "example": "keep-alive"
+          "content":
+            "application/json":
+              "schema":
+                "type": "object"
+              "example":
+                "id": 29
+                "name": "test TEST"
+                "email": "test132@test.com"
+                "created_at": "2025/01/21"
+                "updated_at": "2025/01/23"

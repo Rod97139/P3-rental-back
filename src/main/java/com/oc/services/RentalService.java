@@ -13,9 +13,11 @@ public interface RentalService {
 
     RentalDisplayDto getRentalById(Integer rentalId);
 
+    RentalDto getRentalDtoById(Integer rentalId);
+
     List<RentalDisplayAllDto> getAllRentals();
 
-    RentalRequestDto updateRental(Integer rentalId, RentalRequestDto updatedRental);
+    RentalRequestDto updateRental(Integer rentalId, RentalRequestDto updatedRental, String email);
 
     void deleteRental(Integer rentalId);
 }

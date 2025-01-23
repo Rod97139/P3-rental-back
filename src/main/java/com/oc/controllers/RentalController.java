@@ -2,10 +2,10 @@ package com.oc.controllers;
 
 import com.oc.dto.RentalDisplayAllDto;
 import com.oc.dto.RentalDisplayDto;
-import com.oc.dto.RentalDto;
 import com.oc.dto.RentalRequestDto;
 import com.oc.services.JWTService;
 import com.oc.services.RentalService;
+import com.oc.utils.HandleFile;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,9 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +43,7 @@ public class RentalController {
     }
 
     @PostMapping(consumes = {"multipart/form-data"})
-    public ResponseEntity<RentalDto> create(
+    public ResponseEntity<?> create(
             @RequestPart("name") String name,
             @RequestPart("surface") String surface,
             @RequestPart("price") String price,
@@ -54,17 +51,8 @@ public class RentalController {
             @RequestPart("description") String description,
             HttpServletRequest request
             ) throws IOException {
-        String rootDir = System.getProperty("user.dir") + "/src/main/resources/static/assets/images/";
 
-        // Créer le répertoire s'il n'existe pas
-        Path directoryPath = Paths.get(rootDir);
-        if (!Files.exists(directoryPath)) {
-            Files.createDirectories(directoryPath);
-        }
-        String originalFileName = file.getOriginalFilename();
-        assert originalFileName != null;
-        Path filePath = directoryPath.resolve(originalFileName);
-        Files.write(filePath, file.getBytes());
+        String originalFileName = HandleFile.saveFile(file);
 
         String token = request.getHeader("Authorization").substring(7);
         String email = jwtService.getSubjectFromToken(token);
@@ -77,18 +65,43 @@ public class RentalController {
                 description
         );
 
-        return new ResponseEntity<>(rentalService.createRental(rentalRequestDto, email), HttpStatus.CREATED);
+        Map<String, String> response = new HashMap<>();
+
+        try {
+            rentalService.createRental(rentalRequestDto, email);
+            response.put("message", "Rental created !");
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+        }
+        catch (Exception e) {
+            response.put("message", e.getMessage());
+            return ResponseEntity.badRequest().body(response);
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RentalRequestDto> updateRental(
+    public ResponseEntity<?> updateRental(
             @PathVariable Integer id,
             @RequestPart("name") String name,
             @RequestPart("surface") String surface,
             @RequestPart("price") String price,
-            @RequestPart("description") String description
+            @RequestPart("description") String description,
+            HttpServletRequest request
     ) {
+        String token = request.getHeader("Authorization").substring(7);
+        String email = jwtService.getSubjectFromToken(token);
+
         RentalRequestDto rentalRequestDto = new RentalRequestDto(name, surface, price, description);
-        return new ResponseEntity<>(rentalService.updateRental(id, rentalRequestDto), HttpStatus.OK);
+
+        Map<String, String> response = new HashMap<>();
+
+        try {
+            rentalService.updateRental(id, rentalRequestDto, email);
+            response.put("message", "Rental updated !");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+        catch (Exception e) {
+            response.put("message", e.getMessage());
+            return ResponseEntity.badRequest().body(response);
+        }
     }
 }
