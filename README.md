@@ -36,7 +36,7 @@ Run as a Standalone Java Application
 
 For OpenApi documentation, you could use the following file in root folder:
 
-> rental.json
+> rental.yaml
 
 and copy it to this link:
 
