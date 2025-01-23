@@ -1,5 +1,6 @@
 package com.oc.configuration;
 
+import com.oc.dto.UserDisplayDto;
 import com.oc.dto.UserDto;
 import com.oc.services.UserService;
 import org.springframework.security.core.userdetails.User;

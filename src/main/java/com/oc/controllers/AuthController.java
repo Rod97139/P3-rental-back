@@ -1,5 +1,6 @@
 package com.oc.controllers;
 
+import com.oc.dto.UserDisplayDto;
 import com.oc.dto.UserLoginRequestDto;
 import com.oc.dto.UserDto;
 import com.oc.services.JWTService;
@@ -33,9 +34,9 @@ public class AuthController {
     }
 
     @GetMapping("/me")
-    public UserDto me(HttpServletRequest request) {
+    public UserDisplayDto me(HttpServletRequest request) {
         String token = request.getHeader("Authorization").substring(7);
         String email = jwtService.getSubjectFromToken(token);
-        return userService.getUserByEmail(email);
+        return userService.getUserDisplayByEmail(email);
     }
 }

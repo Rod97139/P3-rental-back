@@ -22,6 +22,6 @@ public class RentalDisplayDto {
     private String[] picture;
     private String description;
     private Number owner_id;
-    private Instant createdAt;
-    private Instant updatedAt;
+    private Instant created_at;
+    private Instant updated_at;
 }
