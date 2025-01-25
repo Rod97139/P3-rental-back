@@ -38,7 +38,7 @@ public class MessageController {
 
         Map<String, String> response = new HashMap<>();
 
-        if (messageRequestDto.getUser_id() != user.getId()) {
+        if (messageRequestDto.getUserId() != user.getId()) {
             response.put("message", "You are not allowed to send a message to another user");
             return ResponseEntity.badRequest().body(response);
         }

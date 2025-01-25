@@ -33,7 +33,7 @@ public class RentalController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getAllRentals() {
+    public ResponseEntity<Map<String, List<RentalDisplayAllDto>>> getAllRentals() {
 
         List<RentalDisplayAllDto> rentals = rentalService.getAllRentals();
 
@@ -43,7 +43,7 @@ public class RentalController {
     }
 
     @PostMapping(consumes = {"multipart/form-data"})
-    public ResponseEntity<?> create(
+    public ResponseEntity<Map<String, String>> create(
             @RequestPart("name") String name,
             @RequestPart("surface") String surface,
             @RequestPart("price") String price,
@@ -79,7 +79,7 @@ public class RentalController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateRental(
+    public ResponseEntity<Map<String, String>> updateRental(
             @PathVariable Integer id,
             @RequestPart("name") String name,
             @RequestPart("surface") String surface,

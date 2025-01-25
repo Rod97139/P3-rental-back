@@ -26,8 +26,8 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public void createMessage(MessageRequestDto messageRequestDto) {
         Message message = MessageMapper.mapToMessage(messageRequestDto);
-        User user = UserMapper.mapToUser(userService.getUserById(messageRequestDto.getUser_id()));
-        Rental rental = RentalMapper.mapToRental(rentalService.getRentalDtoById(messageRequestDto.getRental_id()));
+        User user = UserMapper.mapToUser(userService.getUserById(messageRequestDto.getUserId()));
+        Rental rental = RentalMapper.mapToRental(rentalService.getRentalDtoById(messageRequestDto.getRentalId()));
         message.setRental(rental);
         message.setUser(user);
         Message savedMessage = messageRepository.save(message);
