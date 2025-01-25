@@ -12,7 +12,7 @@ Go into the project folder:
 
 > cd P3-rental-back
 
-Rename the file `application-example.properties` to `application.properties` and set the correct values for the database connection.
+Rename the file `.env.example` to `.env` and set the correct values for the database connection.
 
 > src/main/resources/application.properties
 
@@ -34,13 +34,9 @@ Run as a Standalone Java Application
 
 ### Documentation
 
-For OpenApi documentation, you could use the following file in root folder:
+For OpenApi documentation, use this following link :
 
-> rental.yaml
-
-and copy it to this link:
-
-> https://editor-next.swagger.io/
+> http://localhost:3001/swagger-ui/index.html
 
 
 ### MySQL
