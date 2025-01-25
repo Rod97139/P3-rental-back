@@ -1,8 +1,6 @@
 package com.oc.controllers;
 
-import com.oc.dto.RentalDisplayAllDto;
-import com.oc.dto.RentalDisplayDto;
-import com.oc.dto.RentalRequestDto;
+import com.oc.dto.*;
 import com.oc.services.JWTService;
 import com.oc.services.RentalService;
 import com.oc.utils.HandleFile;
@@ -14,9 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @CrossOrigin(origins = "*")
 @AllArgsConstructor
@@ -33,17 +29,14 @@ public class RentalController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getAllRentals() {
-
+    public ResponseEntity<RentalsDisplayAllResponseDto> getAllRentals() {
         List<RentalDisplayAllDto> rentals = rentalService.getAllRentals();
-
-        Map<String, List<RentalDisplayAllDto>> result = new HashMap<>();
-        result.put("rentals", rentals);
+        RentalsDisplayAllResponseDto result = new RentalsDisplayAllResponseDto(rentals);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @PostMapping(consumes = {"multipart/form-data"})
-    public ResponseEntity<?> create(
+    public ResponseEntity<ServerResponseMessageDto> create(
             @RequestPart("name") String name,
             @RequestPart("surface") String surface,
             @RequestPart("price") String price,
@@ -65,21 +58,21 @@ public class RentalController {
                 description
         );
 
-        Map<String, String> response = new HashMap<>();
+        ServerResponseMessageDto response = new ServerResponseMessageDto();
 
         try {
             rentalService.createRental(rentalRequestDto, email);
-            response.put("message", "Rental created !");
+            response.setMessage("Rental created !");
             return new ResponseEntity<>(response, HttpStatus.CREATED);
         }
         catch (Exception e) {
-            response.put("message", e.getMessage());
+            response.setMessage(e.getMessage());
             return ResponseEntity.badRequest().body(response);
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateRental(
+    public ResponseEntity<ServerResponseMessageDto> updateRental(
             @PathVariable Integer id,
             @RequestPart("name") String name,
             @RequestPart("surface") String surface,
@@ -92,15 +85,15 @@ public class RentalController {
 
         RentalRequestDto rentalRequestDto = new RentalRequestDto(name, surface, price, description);
 
-        Map<String, String> response = new HashMap<>();
+        ServerResponseMessageDto response = new ServerResponseMessageDto();
 
         try {
             rentalService.updateRental(id, rentalRequestDto, email);
-            response.put("message", "Rental updated !");
+            response.setMessage("Rental updated !");
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
         catch (Exception e) {
-            response.put("message", e.getMessage());
+            response.setMessage(e.getMessage());
             return ResponseEntity.badRequest().body(response);
         }
     }

@@ -28,11 +28,16 @@ import javax.crypto.spec.SecretKeySpec;
 @EnableWebSecurity
 public class SpringSecurityConfig {
 
-    @Value("${jwt.secret.key}")
+    @Value("${JWT_SECRET}")
     private String jwtKey;
 
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
+
+    private static final String[] WHITE_LIST_URL = { "/api/v1/auth/**", "/v2/api-docs", "/v3/api-docs",
+            "/v3/api-docs/**", "/swagger-resources", "/swagger-resources/**", "/configuration/ui",
+            "/configuration/security", "/swagger-ui/**", "/webjars/**", "/swagger-ui.html", "/api/auth/**",
+            "/api/test/**", "/authenticate", "/api/auth/register", "/api/auth/login", "/assets/**" };
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -40,7 +45,7 @@ public class SpringSecurityConfig {
         return http.csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/register", "/api/auth/login", "/assets/**").permitAll()
+                        .requestMatchers(WHITE_LIST_URL).permitAll()
                         .anyRequest().authenticated())
                 .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()))
                 .httpBasic(basic -> basic.disable())
@@ -69,7 +74,6 @@ public class SpringSecurityConfig {
         authenticationManagerBuilder.userDetailsService(customUserDetailsService).passwordEncoder(bCryptPasswordEncoder);
         return authenticationManagerBuilder.build();
     }
-
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {

@@ -1,5 +1,6 @@
 package com.oc.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +20,10 @@ public class RentalDisplayAllDto {
         private Number price;
         private String picture;
         private String description;
-        private Number owner_id;
-        private Instant created_at;
-        private Instant updated_at;
+        @JsonProperty("owner_id")
+        private Number ownerId;
+        @JsonProperty("created_at")
+        private Instant createdAt;
+        @JsonProperty("updated_at")
+        private Instant updatedAt;
 }

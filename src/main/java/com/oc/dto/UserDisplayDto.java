@@ -1,5 +1,6 @@
 package com.oc.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,8 @@ public class UserDisplayDto {
     private Integer id;
     private String name;
     private String email;
-    private String created_at;
-    private String updated_at;
+    @JsonProperty("created_at")
+    private String createdAt;
+    @JsonProperty("updated_at")
+    private String updatedAt;
 }
