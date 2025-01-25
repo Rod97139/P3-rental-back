@@ -3,6 +3,8 @@ package com.oc.controllers;
 import com.oc.dto.UserDisplayDto;
 import com.oc.services.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*")
@@ -14,7 +16,7 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/{userId}")
-    public UserDisplayDto getUserById(@PathVariable Integer userId) {
-        return userService.getUserDisplayById(userId);
+    public ResponseEntity<UserDisplayDto> getUserById(@PathVariable Integer userId) {
+        return new ResponseEntity<>(userService.getUserDisplayById(userId), HttpStatus.OK);
     }
 }

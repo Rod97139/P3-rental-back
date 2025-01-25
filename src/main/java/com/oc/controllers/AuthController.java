@@ -1,5 +1,6 @@
 package com.oc.controllers;
 
+import com.oc.dto.TokenResponseDto;
 import com.oc.dto.UserDisplayDto;
 import com.oc.dto.UserLoginRequestDto;
 import com.oc.dto.UserDto;
@@ -10,7 +11,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.Map;
 
 @CrossOrigin(origins = "*")
 @AllArgsConstructor
@@ -22,21 +22,21 @@ public class AuthController {
     private JWTService jwtService;
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody UserDto userDto) {
+    public ResponseEntity<TokenResponseDto> register(@RequestBody UserDto userDto) {
         UserDto savedUser = userService.createUser(userDto);
         UserLoginRequestDto userLoginRequestDto = new UserLoginRequestDto(savedUser.getEmail(), savedUser.getPassword());
         return new ResponseEntity<>(jwtService.generateToken(userLoginRequestDto), HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
-    public Map<String, String> login(@RequestBody UserLoginRequestDto userLoginRequestDto) {
-       return jwtService.generateToken(userLoginRequestDto);
+    public ResponseEntity<TokenResponseDto> login(@RequestBody UserLoginRequestDto userLoginRequestDto) {
+       return new ResponseEntity<>(jwtService.generateToken(userLoginRequestDto), HttpStatus.OK);
     }
 
     @GetMapping("/me")
-    public UserDisplayDto me(HttpServletRequest request) {
+    public ResponseEntity<UserDisplayDto> me(HttpServletRequest request) {
         String token = request.getHeader("Authorization").substring(7);
         String email = jwtService.getSubjectFromToken(token);
-        return userService.getUserDisplayByEmail(email);
+        return new ResponseEntity<>(userService.getUserDisplayByEmail(email), HttpStatus.OK);
     }
 }

@@ -1,5 +1,6 @@
 package com.oc.services;
 
+import com.oc.dto.TokenResponseDto;
 import com.oc.dto.UserLoginRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
@@ -8,8 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class JWTService {
@@ -22,7 +21,7 @@ public class JWTService {
 
 
 
-    public Map<String, String> generateToken(UserLoginRequestDto user) {
+    public TokenResponseDto generateToken(UserLoginRequestDto user) {
         Instant now = Instant.now();
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("self")
@@ -32,9 +31,8 @@ public class JWTService {
                 .build();
         JwtEncoderParameters jwtEncoderParameters = JwtEncoderParameters.from(JwsHeader.with(MacAlgorithm.HS256).build(), claims);
         String token = jwtEncoder.encode(jwtEncoderParameters).getTokenValue();
-
-        Map<String, String> result = new HashMap<>();
-        result.put("token", token);
+        TokenResponseDto result = new TokenResponseDto();
+        result.setToken(token);
         return result;
     }
 
